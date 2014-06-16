@@ -9,11 +9,9 @@ import Model.Aegean.Aegean;
 import Model.Aegean.Include;
 import Model.Aegean.Link;
 import Model.Aegean.Node;
-import Model.Aegean.Platform;
 import Model.IPCores.IPCore;
 import Model.IPCores.IPCores;
 import Model.Static.OSFinder;
-import Model.Static.Settings;
 import Model.Static.XmlSerializer;
 
 public class Model {

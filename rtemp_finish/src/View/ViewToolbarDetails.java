@@ -9,6 +9,7 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
 import Model.Model;
+import Model.Static.ResourceLoader;
 
 public class ViewToolbarDetails {
 	private View view;
@@ -24,11 +25,11 @@ public class ViewToolbarDetails {
 
 		toolBar = new ToolBar (view.getShell(), SWT.FLAT);
 		
-		itemAddIo = addItem("resources/io_add.png","Add IO");
-		itemRemoveIo = addItem("resources/io_delete.png","Remove IO");
+		itemAddIo = addItem("io_add.png","Add IO");
+		itemRemoveIo = addItem("io_delete.png","Remove IO");
 		addSeperator();
-		itemAddInclude = addItem("resources/include_add.png","Add Include");
-		itemRemoveInclude = addItem("resources/include_delete.png","Remove Include");
+		itemAddInclude = addItem("include_add.png","Add Include");
+		itemRemoveInclude = addItem("include_delete.png","Remove Include");
 	}
 	
 	private void addSeperator() {
@@ -38,7 +39,7 @@ public class ViewToolbarDetails {
 	
 	private ToolItem addItem(String image, String string) {
 		ToolItem item = new ToolItem (toolBar, SWT.PUSH);
-		item.setImage(new Image(null,image));
+		item.setImage(new Image(null,ResourceLoader.load(image)));
 		item.setToolTipText(string);
 		item.setEnabled(false);
 		this.toolItems.add(item);

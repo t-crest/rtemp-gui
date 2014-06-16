@@ -26,6 +26,7 @@ import Model.Aegean.Include;
 import Model.IPCores.IPCore;
 import Model.IPCores.IPCores;
 import Model.Static.OSFinder;
+import Model.Static.ResourceLoader;
 import Model.Static.Settings;
 
 
@@ -67,7 +68,8 @@ public class View {
 		//getShell().setMaximized(true);
 
 		//Icon 
-		Image small = new Image(display,"icon_512.png");
+		
+		Image small = new Image(display,ResourceLoader.load("icon_512.png"));
 		getShell().setImage(small);
 
 		//Menu
