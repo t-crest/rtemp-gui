@@ -98,7 +98,7 @@ public class Controller {
 		if(OSFinder.isMac())
 			command = new String[]{ "osascript", "-e", "tell application \"Terminal\" to do script " + "\"" + cmd + "\""};
 		if(OSFinder.isLinux())
-			command = new String[]{"gnome-terminal","-x","bash -c \""+cmd+";$SHELL\""};
+			command = new String[]{"x-terminal-emulator","-e","bash -c \""+cmd+";$SHELL\""};
 		if(OSFinder.isWindows())
 			command = new String[]{"cmd /c start cmd.exe /K " + cmd};
 		
