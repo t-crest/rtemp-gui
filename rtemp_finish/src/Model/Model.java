@@ -9,20 +9,16 @@ import Model.Aegean.Aegean;
 import Model.Aegean.Include;
 import Model.Aegean.Link;
 import Model.Aegean.Node;
-import Model.Aegean.Platform;
 import Model.IPCores.IPCore;
 import Model.IPCores.IPCores;
 import Model.Static.OSFinder;
-import Model.Static.Settings;
 import Model.Static.XmlSerializer;
 
 public class Model {
 	private List<IPCores> ipcores = new ArrayList<IPCores>();
 	private Aegean aegean =  new Aegean();
-
-	private String selectedTool="", selectedCpu="";
-	private List<Point> pointListAdd = new ArrayList<Point>();
-	private List<Point> pointListRemove = new ArrayList<Point>();
+	private List<Point> pointListAddLink = new ArrayList<Point>();
+	private List<Point> pointListRemoveLink = new ArrayList<Point>();
 
 	/* ************************* CONSTRUCTOR ************************* */
 
@@ -32,22 +28,39 @@ public class Model {
 	}
 
 	/* *************************** METHODS *************************** */
-	public boolean loadFile(String file) {
+
+	//Loading platform with include IPCores.
+	public boolean loadPlatform(String file) {
 		try {
 			setAegean(XmlSerializer.Load(Aegean.class, file));
-			
+
 			loadIPCores();
-			
+
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
 	}
-	
-	//Loading the IPCores using the includes in from the platform.
-	public void loadIPCores() {
 
+	//Saving platform with the IPCores. With new platformname.
+	public void savePlatform(String file) {
+		try {
+			XmlSerializer.Save(getAegean(), file);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		saveIPCores();
+	}
+
+	//Saving platform on the currently open one with the included IPCores
+	public void saveCurrentPlatform() {
+		savePlatform(getAegean().getAbsorlutepath());
+	}
+
+	//Loading the IPCores from the includes in the platform.
+	public void loadIPCores() {
+		System.out.println("Loading ip cores");
 		//Clear all the existing IPCores that has been previously loaded.
 		ipcores.clear();
 		for(Include i : getAegean().getPlatform().getInclude()) {
@@ -58,10 +71,12 @@ public class Model {
 				// Remove two first characters
 				filepath = filepath.substring(1);
 
-				filepath = "config" + filepath;
+				filepath = getAegean().getParrentFolder() + "/config" + filepath;
 
+				System.out.println(OSFinder.isWindows());
 				if(OSFinder.isWindows()) {
 					filepath = filepath.replace("/", "\\");
+					System.out.println(filepath);
 				}
 
 
@@ -70,14 +85,14 @@ public class Model {
 					ipcores.add(ips);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
-//					e.printStackTrace();
+					//					e.printStackTrace();
 				}
 			}
 		}
 
 	}
-	
-	//Saving ip cores
+
+	//Saving IPCores
 	public void saveIPCores() {
 		for(IPCores ip : getIpcores()) {
 			try {
@@ -88,30 +103,12 @@ public class Model {
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
 
-	//When saving platform the included IPCores get saved as well
-	public void savePlatform(PlatformObject o, String file) {
-		try {
-			XmlSerializer.Save(o, file);
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-		saveIPCores();
-	}
-	
-	public void saveCurrentPlatform() {
-		try {
-			XmlSerializer.Save(getAegean(), getAegean().getAbsorlutepath());
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-		saveIPCores();
-	}
-	
+	//Get the topology type
 	public linkConfiguration getTopologyType() {
-		
+
 		linkConfiguration l = null;
 		try {
 			l = getAegean().getPlatform().getTopology().getTopoType();
@@ -119,15 +116,16 @@ public class Model {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return l == null ? linkConfiguration.custom : l;
 	}
 
+	//Copy the link configuration
 	public void copyLinkConfiguration() {
 		// Clear all links
 		getAegean().getPlatform().getTopology().getLinks().clear();
 		System.out.println("links cleared");
-		
+
 		switch(getTopologyType()) {
 		case bitorus:
 			getAegean().getPlatform().getTopology().getLinks().addAll(createBitorusLinks());
@@ -139,11 +137,12 @@ public class Model {
 			break;
 		}
 	}
-	
+
+	//Creating bitorus links
 	public List<Link> createBitorusLinks() {
 		List<Link> result = new ArrayList<Link>();
-		int w = getPlatform().getWidth();
-		int h = getPlatform().getHeight();
+		int w = getAegean().getPlatform().getWidth();
+		int h = getAegean().getPlatform().getHeight();
 
 		for(int i = 0; i < w; i++) {
 			for(int j = 0; j < h; j++) {
@@ -174,14 +173,15 @@ public class Model {
 				}	
 			}
 		}
-	
+
 		return result;
 	}
-	
+
+	//Creating mesh links
 	public List<Link> createMeshLinks() {
 		List<Link> result = new ArrayList<Link>();
-		int w = getPlatform().getWidth();
-		int h = getPlatform().getHeight();
+		int w = getAegean().getPlatform().getWidth();
+		int h = getAegean().getPlatform().getHeight();
 
 		for(int i = 0; i < w; i++) {
 			for(int j = 0; j < h; j++) {
@@ -202,37 +202,11 @@ public class Model {
 				}	
 			}
 		}
-	
+
 		return result;
 	}
-	
-	public IPCore cloneIpcore(IPCore original) throws CloneNotSupportedException {
-		// Clone IPCore
-		IPCore newIpcore = (IPCore) original.clone();
-		
-		// Change name
-		newIpcore.setIpType("Copy_" + newIpcore.getIpType());
-		
-		// Insert new IPCore in correct list
-		for(IPCores ips : ipcores) {
-			if(ips.getIpCores().contains(original)) {
-				ips.getIpCores().add(newIpcore);
-				break;
-			}
-		}
-		
-		return newIpcore;
-	}
-	
-	public void removeIpcore(IPCore ipcore) {
-		for(IPCores ips : ipcores) {
-			if(ips.getIpCores().contains(ipcore)) {
-				ips.getIpCores().remove(ipcore);
-				break;
-			}
-		}
-	}
 
+	//Adds a link
 	public boolean addLink(Point pointSelected)
 	{
 
@@ -241,46 +215,46 @@ public class Model {
 		String pointFrom = "";
 		String pointTo= "";
 
-		if(pointListAdd.size()==0)
+		if(pointListAddLink.size()==0)
 		{
-			pointListAdd.add(pointSelected);
+			pointListAddLink.add(pointSelected);
 		}
 
-		else if(pointListAdd.size()==1 && !pointListAdd.get(0).equals(pointSelected))
+		else if(pointListAddLink.size()==1 && !pointListAddLink.get(0).equals(pointSelected))
 		{
 			int platformWidth = getAegean().getPlatform().getWidth()-1;
 			int platformHeight = getAegean().getPlatform().getHeight()-1;
-			
-			int tempXplus = (int) pointListAdd.get(0).getX() + 1;
+
+			int tempXplus = (int) pointListAddLink.get(0).getX() + 1;
 			if(tempXplus > platformWidth)
 			{
 				tempXplus = 0;
 			}
-			
-			int tempXminus = (int) pointListAdd.get(0).getX() - 1;
+
+			int tempXminus = (int) pointListAddLink.get(0).getX() - 1;
 			if(tempXminus < 0)
 			{
 				tempXminus = platformWidth;
 			}
-			
-			int tempYplus = (int) pointListAdd.get(0).getY() + 1;
+
+			int tempYplus = (int) pointListAddLink.get(0).getY() + 1;
 			if(tempYplus > platformHeight)
 			{
 				tempYplus = 0;
 			}
-			
-			int tempYminus = (int) pointListAdd.get(0).getY() - 1;
+
+			int tempYminus = (int) pointListAddLink.get(0).getY() - 1;
 			if(tempYminus < 0)
 			{
 				tempYminus = platformHeight;
 			}
-			
-			if( ((pointSelected.x==tempXplus || pointSelected.x==tempXminus) && pointSelected.y==pointListAdd.get(0).getY()) || 
-				((pointSelected.y==tempYplus || pointSelected.y==tempYminus) && pointSelected.x==pointListAdd.get(0).getX()) ){
 
-				pointListAdd.add(pointSelected);
-				pointFrom = pointToLoc(pointListAdd.get(0));
-				pointTo = pointToLoc(pointListAdd.get(1));
+			if( ((pointSelected.x==tempXplus || pointSelected.x==tempXminus) && pointSelected.y==pointListAddLink.get(0).getY()) || 
+					((pointSelected.y==tempYplus || pointSelected.y==tempYminus) && pointSelected.x==pointListAddLink.get(0).getX()) ){
+
+				pointListAddLink.add(pointSelected);
+				pointFrom = pointToLoc(pointListAddLink.get(0));
+				pointTo = pointToLoc(pointListAddLink.get(1));
 
 				for(Link linkTemp : aegean.getPlatform().getTopology().getLinks())
 				{
@@ -299,27 +273,29 @@ public class Model {
 					aegean.getPlatform().getTopology().getLinks().add(link);
 					linkHasBeenCreated = true;
 				}
-				pointListAdd.clear();
+				pointListAddLink.clear();
 
 			} else{
 				foundExistingLink = true;
-				pointListAdd.clear();
-				}
+				pointListAddLink.clear();
+			}
 		} else { 
 			foundExistingLink = true;
-			pointListAdd.clear();
+			pointListAddLink.clear();
 		}
 
 		sortLinks();
-		
+
 		return (foundExistingLink || linkHasBeenCreated);
 	}
 
+	//Sorting links after the point location
 	private void sortLinks() {
-		
+
 		Collections.sort(aegean.getPlatform().getTopology().getLinks());
 	}
 
+	//Removing a link
 	public boolean removeLink(Point pointSelected)
 	{
 		boolean linkHasBeenRemoved=false;
@@ -327,16 +303,16 @@ public class Model {
 		String pointFrom = "";
 		String pointTo= "";
 
-		if(pointListRemove.size()==0)
+		if(pointListRemoveLink.size()==0)
 		{
-			pointListRemove.add(pointSelected);
+			pointListRemoveLink.add(pointSelected);
 		}
 
-		else if(pointListRemove.size()==1 && !pointListRemove.get(0).equals(pointSelected))
+		else if(pointListRemoveLink.size()==1 && !pointListRemoveLink.get(0).equals(pointSelected))
 		{
-			pointListRemove.add(pointSelected);
-			pointFrom = pointToLoc(pointListRemove.get(0));
-			pointTo = pointToLoc(pointListRemove.get(1));
+			pointListRemoveLink.add(pointSelected);
+			pointFrom = pointToLoc(pointListRemoveLink.get(0));
+			pointTo = pointToLoc(pointListRemoveLink.get(1));
 
 			for(Link linkTemp : aegean.getPlatform().getTopology().getLinks())
 			{
@@ -348,129 +324,22 @@ public class Model {
 				}
 			}
 			wrongRemoveType = true;
-			pointListRemove.clear();
+			pointListRemoveLink.clear();
 
 		} else { 
 
 			wrongRemoveType = true;
-			pointListRemove.clear();
+			pointListRemoveLink.clear();
 		}
 		return (linkHasBeenRemoved || wrongRemoveType);
 	}
 
-	
-	/* ********************* GETTERS AND SETTERS ********************* */
-
-	public void setAegean(Aegean aegean) {
-		this.aegean = aegean;
-	}
-
-	public Aegean getAegean() {
-		return aegean;
-	}
-
-	public List<IPCores> getIpcores() {
-		return ipcores;
-	}
-
-	public String getSelectedTool() {
-		return selectedTool;
-	}
-
-	public void setSelectedTool(String selectedTool) {
-		this.selectedTool = selectedTool;
-	}
-
-	public Point locToPoint(String s) {
-		return new Point(Integer.parseInt(s.substring(1, 2)), Integer.parseInt(s.substring(3, 4)));
-	}
-	
-	public String pointToLoc(Point p) {
-		return "(" + p.x + "," + p.y + ")";
-	}
-	
-	
-	
-	
-	
-
-	public Platform getPlatform() {
-		// TODO Auto-generated method stub
-		return this.aegean.getPlatform();
-	}
-
-	public List<Node> getNodes() {
-		// TODO Auto-generated method stub
-		return getPlatform().getNodes();
-	}
-
-	public List<Link> getLinks() {
-		// TODO Auto-generated method stub
-		return getPlatform().getTopology().getLinks();
-	}
-
-	public void addNode(Node node) {	
-		getPlatform().getNodes().add(node);
-		Collections.sort(getPlatform().getNodes());
-		updateNodeId();
-		
-	
-	}
-
-	private void updateNodeId() {
-		for (int i=0; i<getPlatform().getNodes().size();i++){
-			getPlatform().getNodes().get(i).setId("pat"+i);
-		}
-		
-	}
-
-	public Node getNode(Point point) {
-		if(point!=null){
-			for(Node n : getNodes()) {
-				
-				Point point2 = locToPoint(n.getLoc());
-				if(point2.equals(point)) {
-					return n;
-				}
-			}
-		}
-		return null;
-	}
-
-	public void removeNode(Node n) {
-		getNodes().remove(n);
-		updateNodeId();
-	}
-
-	public String getPlatformName() {
-		return this.getAegean().getFileName();
-	}
-
-	public String getPlatformDir() {
-		
-		try {			
-			return this.getAegean().getAbsorlutepath();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return "ERROR";
-	}
-
-	public List<Point> getPointListAdd() {
-		return pointListAdd;
-	}
-	
-	public List<Point> getPointListRemove() {
-		return pointListRemove;
-	}
-
+	//Adding links to a node, from the surrounding nodes
 	public void addToLinks(Point point) {
-	
+
 		int width = aegean.getPlatform().getWidth();
 		int height = aegean.getPlatform().getHeight();
-		
+
 		addLink(point);
 		Point tempPoint = new Point(point.x-1, point.y);
 		if(tempPoint.x<0)
@@ -478,7 +347,7 @@ public class Model {
 			tempPoint.x = width-1;
 			addLink(tempPoint);
 		}else{addLink(tempPoint);}
-		
+
 		addLink(point);
 		tempPoint = new Point(point.x+1, point.y);
 		if(tempPoint.x>=width)
@@ -486,7 +355,7 @@ public class Model {
 			tempPoint.x = 0;
 			addLink(tempPoint);
 		}else{addLink(tempPoint);}
-	
+
 		addLink(point);
 		tempPoint = new Point(point.x, point.y-1);
 		if(tempPoint.y<0)
@@ -494,7 +363,7 @@ public class Model {
 			tempPoint.y = height-1;
 			addLink(tempPoint);
 		}else{addLink(tempPoint);}
-	
+
 		addLink(point);
 		tempPoint = new Point(point.x, point.y+1);
 		if(tempPoint.y>=height)
@@ -504,10 +373,11 @@ public class Model {
 		} else{addLink(tempPoint);}
 	}
 
+	//Adding links from a node, to the surrounding nodes
 	public void addFromLinks(Point point) {
 		int width = aegean.getPlatform().getWidth();
 		int height = aegean.getPlatform().getHeight();
-		
+
 		Point tempPoint = new Point(point.x-1, point.y);
 		if(tempPoint.x<0)
 		{
@@ -515,7 +385,7 @@ public class Model {
 			addLink(tempPoint);
 		}else{addLink(tempPoint);}
 		addLink(point);
-		
+
 		tempPoint = new Point(point.x+1, point.y);
 		if(tempPoint.x>=width)
 		{
@@ -523,7 +393,7 @@ public class Model {
 			addLink(tempPoint);
 		}else{addLink(tempPoint);}
 		addLink(point);
-	
+
 		tempPoint = new Point(point.x, point.y-1);
 		if(tempPoint.y<0)
 		{
@@ -531,7 +401,7 @@ public class Model {
 			addLink(tempPoint);
 		}else{addLink(tempPoint);}
 		addLink(point);
-		
+
 		tempPoint = new Point(point.x, point.y+1);
 		if(tempPoint.y>=height)
 		{
@@ -539,51 +409,53 @@ public class Model {
 			addLink(tempPoint);
 		} else{addLink(tempPoint);}
 		addLink(point);
-		
+
 	}
 
+	//Adding links to and from a node, to the surrounding nodes
 	public void addToFromLinks(Point point) {
 		addToLinks(point);
 		addFromLinks(point);
-		
+
 	}
 
+	//used to destroy long links
 	public void destroyLongLinks(String direction) {
-		
+
 		List<Link> links = getAegean().getPlatform().getTopology().getLinks();
 		List<Node> nodes = getAegean().getPlatform().getNodes(); 
-		
+
 		if(direction.equals("height"))
 		{
 			int height = getAegean().getPlatform().getHeight();
-			
+
 			for (int i=links.size()-1; i>=0;i--)
 			{
-				
+
 				int sourceY = locToPoint(links.get(i).getSource()).y;
 				int sinkY = locToPoint(links.get(i).getSink()).y;
-				
+
 				int differenceY = Math.abs(sourceY-sinkY);
 				int differenceSourceYHeight = height-sourceY;
 				int differenceSinkYHeight = height-sinkY;
-				
+
 				if(differenceY>1 || differenceSourceYHeight<1 || differenceSinkYHeight<1){
 					links.remove(i);
 				}
-				
+
 			}
-			
+
 			for (int i=nodes.size()-1; i>=0;i--)
 			{
 				int nodeY = locToPoint(nodes.get(i).getLoc()).y;
 				int differenceYHeight = height-nodeY;
-				
+
 				if(differenceYHeight<1){
 					nodes.remove(i);
 				}
 			}
 		}
-		
+
 		if(direction.equals("width"))
 		{
 			int width = getAegean().getPlatform().getWidth();
@@ -594,24 +466,128 @@ public class Model {
 				int differenceX = Math.abs(sourceX-sinkX);
 				int differenceSourceXHeight = width-sourceX;
 				int differenceSinkXHeight = width-sinkX;
-				
+
 				if(differenceX>1 || differenceSourceXHeight<1 || differenceSinkXHeight<1){
 					links.remove(i);
 				}
 			}
-			
+
 			for (int i=nodes.size()-1; i>=0;i--)
 			{
 				int nodeX = locToPoint(nodes.get(i).getLoc()).x;
 				int differenceYWidth = width-nodeX;
-				
+
 				if(differenceYWidth<1){
 					nodes.remove(i);
 				}
 			}
-			
+
 		}
-		
+
+	}
+
+	//Making a string location to point
+	public Point locToPoint(String s) {
+		return new Point(Integer.parseInt(s.substring(1, 2)), Integer.parseInt(s.substring(3, 4)));
+	}
+
+	//making a point to string location
+	public String pointToLoc(Point p) {
+		return "(" + p.x + "," + p.y + ")";
+	}
+
+	//Cloning an existing IPCore
+	public IPCore cloneIpcore(IPCore original) throws CloneNotSupportedException {
+		// Clone IPCore
+		IPCore newIpcore = (IPCore) original.clone();
+
+		// Change name
+		newIpcore.setIpType("Copy_" + newIpcore.getIpType());
+
+		// Insert new IPCore in correct list
+		for(IPCores ips : ipcores) {
+			if(ips.getIpCores().contains(original)) {
+				ips.getIpCores().add(newIpcore);
+				break;
+			}
+		}
+
+		return newIpcore;
+	}
+
+	//Removes an IPCore
+	public void removeIpcore(IPCore ipcore) {
+		for(IPCores ips : ipcores) {
+			if(ips.getIpCores().contains(ipcore)) {
+				ips.getIpCores().remove(ipcore);
+				break;
+			}
+		}
+	}
+
+	//Add a node
+	public void addNode(Node node) {	
+		getAegean().getPlatform().getNodes().add(node);
+		Collections.sort(getAegean().getPlatform().getNodes());
+		updateNodeId();
+
+
+	}
+
+	//Updating node id
+	private void updateNodeId() {
+		for (int i=0; i<getAegean().getPlatform().getNodes().size();i++){
+			getAegean().getPlatform().getNodes().get(i).setId("pat"+i);
+		}
+
+	}
+
+	//Remove a node
+	public void removeNode(Node n) {
+		getAegean().getPlatform().getNodes().remove(n);
+		updateNodeId();
+	}
+
+
+	/* ********************* GETTERS AND SETTERS ********************* */
+
+	//Get the list of points you are adding links between
+	public List<Point> getPointListAddLink() {
+		return pointListAddLink;
+	}
+
+	//get a list of points you are removing links between
+	public List<Point> getPointListRemoveLink() {
+		return pointListRemoveLink;
+	}
+
+	//Returning a node
+	public Node getNode(Point point) {
+		if(point!=null){
+			for(Node n : getAegean().getPlatform().getNodes()) {
+
+				Point point2 = locToPoint(n.getLoc());
+				if(point2.equals(point)) {
+					return n;
+				}
+			}
+		}
+		return null;
+	}
+
+	//Setting the aegean object
+	public void setAegean(Aegean aegean) {
+		this.aegean = aegean;
+	}
+
+	//return the aegean object
+	public Aegean getAegean() {
+		return aegean;
+	}
+
+	//Returning the IPCores
+	public List<IPCores> getIpcores() {
+		return ipcores;
 	}
 
 }

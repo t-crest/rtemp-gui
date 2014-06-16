@@ -205,7 +205,7 @@ public class DetailsListener implements SelectionListener {
 
 		// Change name of nodes, if IPCore name changed
 		if(p.getClass().equals(IPCore.class) && o.attributeName.equals("ipType")) {
-			for(Node n : model.getNodes()) {
+			for(Node n : model.getAegean().getPlatform().getNodes()) {
 				if(n.getIpTypeRef().equals(o.attributeValue)) {
 					n.setIpTypeRef(((IPCore) p).getIpType());
 				}

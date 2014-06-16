@@ -9,6 +9,7 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
 import Model.Model;
+import Model.Static.ResourceLoader;
 
 public class ViewToolbarCpu {
 	private View view;
@@ -24,8 +25,8 @@ public class ViewToolbarCpu {
 
 		toolBar = new ToolBar (view.getShell(), SWT.FLAT);
 		
-		itemCopy = addItem("resources/copy_cpu.png","Copy IP");
-		itemDelete = addItem("resources/delete_cpu.png","Delete IP");
+		itemCopy = addItem("copy_cpu.png","Copy IP");
+		itemDelete = addItem("delete_cpu.png","Delete IP");
 	}
 	
 	private void addSeperator() {
@@ -35,7 +36,7 @@ public class ViewToolbarCpu {
 	
 	private ToolItem addItem(String image, String string) {
 		ToolItem item = new ToolItem (toolBar, SWT.PUSH);
-		item.setImage(new Image(null,image));
+		item.setImage(new Image(null,ResourceLoader.load(image)));
 		item.setToolTipText(string);
 		this.toolItems.add(item);
 		return item;

@@ -28,6 +28,9 @@ public class Settings implements IConfig
 	
 	static
 	{
+		File dir = new File("settings");
+		dir.mkdir();
+		
 		String filename= OSFinder.isWindows() ? "settings\\settings.xml":"settings/settings.xml";
 		try 
 		{

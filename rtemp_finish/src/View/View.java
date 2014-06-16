@@ -26,6 +26,7 @@ import Model.Aegean.Include;
 import Model.IPCores.IPCore;
 import Model.IPCores.IPCores;
 import Model.Static.OSFinder;
+import Model.Static.ResourceLoader;
 import Model.Static.Settings;
 
 
@@ -67,7 +68,8 @@ public class View {
 		//getShell().setMaximized(true);
 
 		//Icon 
-		Image small = new Image(display,"icon_512.png");
+		
+		Image small = new Image(display,ResourceLoader.load("icon_512.png"));
 		getShell().setImage(small);
 
 		//Menu
@@ -235,7 +237,7 @@ public class View {
 		viewDetails.showSettings(selectedDetails);
 
 		// Check current link configuration
-		linkConfiguration l = model.getPlatform().getTopology().getTopoType();
+		linkConfiguration l = model.getAegean().getPlatform().getTopology().getTopoType();
 		viewToolbarPlatform.setDropdownMenu(l);
 
 		if(linkConfiguration.custom.equals(l)) {
@@ -296,7 +298,7 @@ public class View {
 
 		String file = filedialog.open();
 		if(!(file==null)){
-			if(model.loadFile(file)){
+			if(model.loadPlatform(file)){
 				setSelectedDetails(model.getAegean());
 				viewCpu.createTabs();
 				update();
@@ -307,9 +309,9 @@ public class View {
 
 	}
 
-	public void saveFile(PlatformObject o) {
+	public void saveFile() {
 		FileDialog filedialog = new FileDialog(getShell(), SWT.SAVE);
-		filedialog.setText("Save " + o.getClass().getSimpleName() + " As");
+		filedialog.setText("Save " + model.getAegean().getClass().getSimpleName() + " As");
 		filedialog.setFilterPath("C:/");
 		String[] filterExt = { "*.xml"};
 		filedialog.setFilterExtensions(filterExt);
@@ -326,7 +328,7 @@ public class View {
 		
 
 		if(!(file==null)){
-			model.savePlatform(o, file);
+			model.savePlatform(file);
 		}
 	}
 
@@ -426,8 +428,8 @@ public class View {
 	}
 
 	public void clearToolSelection(ToolItem exception) {
-		model.getPointListAdd().clear();
-		model.getPointListRemove().clear();
+		model.getPointListAddLink().clear();
+		model.getPointListRemoveLink().clear();
 		for(ToolItem i : viewToolbarPlatform.getToolbar().getItems()) {
 			if(!i.equals(exception))
 				i.setSelection(false);

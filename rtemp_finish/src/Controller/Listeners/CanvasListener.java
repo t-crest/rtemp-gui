@@ -41,7 +41,7 @@ public class CanvasListener implements MouseListener {
 			for(Line2D line : l) {
 				if(line.intersects(r)) {
 					int index = paths.indexOf(l);
-					view.viewCanvas.selectedLinks.add(model.getLinks().get(index));
+					view.viewCanvas.selectedLinks.add(model.getAegean().getPlatform().getTopology().getLinks().get(index));
 					break;
 				}
 			}
@@ -92,7 +92,7 @@ public class CanvasListener implements MouseListener {
 				}
 			} 
 			else{
-				model.getPointListAdd().clear();
+				model.getPointListAddLink().clear();
 			}
 		}
 
@@ -103,7 +103,7 @@ public class CanvasListener implements MouseListener {
 					view.viewCanvas.setSelectedRectangle(null);
 				}
 				else{
-					model.getPointListAdd().clear();
+					model.getPointListAddLink().clear();
 				}
 			}
 		}

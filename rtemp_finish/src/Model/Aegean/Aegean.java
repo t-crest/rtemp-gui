@@ -12,9 +12,9 @@ import Model.Interfaces.IConfig;
 @Root()
 public class Aegean extends PlatformObject implements IConfig
 {
-	private String fileName;
-	private String absolutePath;
-	private String parrentFolder;
+	private String fileName = "";
+	private String absolutePath = "";
+	private String parrentFolder = "";
 	
 	@Attribute(required=false)
 	private String version = "0.1";

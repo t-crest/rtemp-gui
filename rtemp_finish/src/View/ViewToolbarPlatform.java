@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.ToolItem;
 
 import Model.Model;
 import Model.linkConfiguration;
+import Model.Static.ResourceLoader;
 
 public class ViewToolbarPlatform {
 	private View view;
@@ -33,26 +34,26 @@ public class ViewToolbarPlatform {
 
 		toolBar = new ToolBar (view.getShell(), SWT.FLAT);
 
-		itemNew = addItem("resources/new_platform.png","New",SWT.PUSH);
-		itemSettings = addItem("resources/platform_settings.png","Settings",SWT.PUSH);
+		itemNew = addItem("new_platform.png","New",SWT.PUSH);
+		itemSettings = addItem("platform_settings.png","Settings",SWT.PUSH);
 		addSeperator();
-		itemMake = addItem("resources/platform_make.png","Make",SWT.PUSH);
-		itemSim = addItem("resources/platform_sim.png","Sim",SWT.PUSH);
-		itemSynth = addItem("resources/platform_synth.png","Synth",SWT.PUSH);
+		itemMake = addItem("platform_make.png","Make",SWT.PUSH);
+		itemSim = addItem("platform_sim.png","Sim",SWT.PUSH);
+		itemSynth = addItem("platform_synth.png","Synth",SWT.PUSH);
 		addSeperator();
-		itemAddCpu = addItem("resources/add_cpu.png","Add Node",SWT.CHECK);
-		itemRemoveCpu = addItem("resources/remove_cpu.png","Remove Node",SWT.CHECK);
-		itemShowSpm = addItem("resources/node_spm.png","Show SPMSize",SWT.CHECK);
+		itemAddCpu = addItem("add_cpu.png","Add Node",SWT.CHECK);
+		itemRemoveCpu = addItem("remove_cpu.png","Remove Node",SWT.CHECK);
+		itemShowSpm = addItem("node_spm.png","Show SPMSize",SWT.CHECK);
 		addSeperator();
-		itemAddLink = addItem("resources/link_add.png","Add Link",SWT.CHECK);
-		itemRemoveLink = addItem("resources/link_delete.png","Remove Link",SWT.CHECK);
-		itemClearLinks = addItem("resources/links_clear.png","Clear All Links",SWT.PUSH);
-		itemLinkType = addItem("resources/link_edit.png","Link Type",SWT.DROP_DOWN);
-		itemCopyLink = addItem("resources/link_copy.png","Copy Links",SWT.PUSH);
+		itemAddLink = addItem("link_add.png","Add Link",SWT.CHECK);
+		itemRemoveLink = addItem("link_delete.png","Remove Link",SWT.CHECK);
+		itemClearLinks = addItem("links_clear.png","Clear All Links",SWT.PUSH);
+		itemLinkType = addItem("link_edit.png","Link Type",SWT.DROP_DOWN);
+		itemCopyLink = addItem("link_copy.png","Copy Links",SWT.PUSH);
 		addSeperator();
-		itemAddAllFromLinks = addItem("resources/links_from.png","Add Links From Node",SWT.CHECK);
-		itemAddAllToLinks = addItem("resources/links_to.png","Add Links To Node",SWT.CHECK);
-		itemAddAllFromToLinks = addItem("resources/links_tofrom.png","Add Links To And From Node",SWT.CHECK);
+		itemAddAllFromLinks = addItem("links_from.png","Add Links From Node",SWT.CHECK);
+		itemAddAllToLinks = addItem("links_to.png","Add Links To Node",SWT.CHECK);
+		itemAddAllFromToLinks = addItem("links_tofrom.png","Add Links To And From Node",SWT.CHECK);
 		
 		
 
@@ -74,7 +75,7 @@ public class ViewToolbarPlatform {
 
 	private ToolItem addItem(String image, String string, int type) {
 		ToolItem item = new ToolItem (toolBar, type);
-		item.setImage(new Image(null,image));
+		item.setImage(new Image(null,ResourceLoader.load(image)));
 		item.setToolTipText(string);
 		this.toolItems.add(item);
 		return item;

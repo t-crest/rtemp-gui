@@ -58,7 +58,7 @@ public class ViewCanvas {
 
 	public Point getSelectedPoint() {
 		int index = rectangles.indexOf(selectedRectangle);
-		int height = model.getPlatform().getHeight();
+		int height = model.getAegean().getPlatform().getHeight();
 		if(height!=0){
 			return new Point(index/height, index%height);
 		}
