@@ -88,7 +88,7 @@ public class Controller {
 	}
 
 	public void runCommand(String commandIn) {
-		String filename= model.getPlatformName().replaceAll(".xml", "");
+		String filename= model.getAegean().getFileName().replaceAll(".xml", "");
 		String cmd = "make -C " + model.getAegean().getParrentFolder()+ " AEGEAN_PLATFORM=" + filename +" "+commandIn;
 		
 		

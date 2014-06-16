@@ -44,8 +44,8 @@ public class CanvasPaintListener implements PaintListener {
 		linkWidth = view.viewCanvas.LINK_WIDTH;
 
 		// Width and height of the platform
-		w = model.getPlatform().getWidth();
-		h = model.getPlatform().getHeight();
+		w = model.getAegean().getPlatform().getWidth();
+		h = model.getAegean().getPlatform().getHeight();
 
 		// Draw links
 		drawTopology();
@@ -67,7 +67,7 @@ public class CanvasPaintListener implements PaintListener {
 		setBackgroundColor(SWT.COLOR_BLACK);
 		setForegroundColor(SWT.COLOR_RED);
 
-		List<Node> nodes = model.getNodes();
+		List<Node> nodes = model.getAegean().getPlatform().getNodes();
 		// TODO
 		for(Node n : nodes) {
 			Point p = model.locToPoint(n.getLoc());
@@ -109,7 +109,7 @@ public class CanvasPaintListener implements PaintListener {
 			links.addAll(model.createMeshLinks());
 			break;
 		case custom:
-			links.addAll(model.getLinks());
+			links.addAll(model.getAegean().getPlatform().getTopology().getLinks());
 			break;
 		}
 
@@ -275,7 +275,7 @@ public class CanvasPaintListener implements PaintListener {
 
 	private void drawNodeNames() {
 		// Draw all names
-		List<Node> nodes = model.getNodes();
+		List<Node> nodes = model.getAegean().getPlatform().getNodes();
 		for(Node n : nodes) {
 			setForegroundColor(SWT.COLOR_RED);
 

@@ -235,7 +235,7 @@ public class View {
 		viewDetails.showSettings(selectedDetails);
 
 		// Check current link configuration
-		linkConfiguration l = model.getPlatform().getTopology().getTopoType();
+		linkConfiguration l = model.getAegean().getPlatform().getTopology().getTopoType();
 		viewToolbarPlatform.setDropdownMenu(l);
 
 		if(linkConfiguration.custom.equals(l)) {
@@ -296,7 +296,7 @@ public class View {
 
 		String file = filedialog.open();
 		if(!(file==null)){
-			if(model.loadFile(file)){
+			if(model.loadPlatform(file)){
 				setSelectedDetails(model.getAegean());
 				viewCpu.createTabs();
 				update();
@@ -307,9 +307,9 @@ public class View {
 
 	}
 
-	public void saveFile(PlatformObject o) {
+	public void saveFile() {
 		FileDialog filedialog = new FileDialog(getShell(), SWT.SAVE);
-		filedialog.setText("Save " + o.getClass().getSimpleName() + " As");
+		filedialog.setText("Save " + model.getAegean().getClass().getSimpleName() + " As");
 		filedialog.setFilterPath("C:/");
 		String[] filterExt = { "*.xml"};
 		filedialog.setFilterExtensions(filterExt);
@@ -326,7 +326,7 @@ public class View {
 		
 
 		if(!(file==null)){
-			model.savePlatform(o, file);
+			model.savePlatform(file);
 		}
 	}
 
@@ -426,8 +426,8 @@ public class View {
 	}
 
 	public void clearToolSelection(ToolItem exception) {
-		model.getPointListAdd().clear();
-		model.getPointListRemove().clear();
+		model.getPointListAddLink().clear();
+		model.getPointListRemoveLink().clear();
 		for(ToolItem i : viewToolbarPlatform.getToolbar().getItems()) {
 			if(!i.equals(exception))
 				i.setSelection(false);

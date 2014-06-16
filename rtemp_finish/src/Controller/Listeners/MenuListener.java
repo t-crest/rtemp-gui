@@ -39,7 +39,7 @@ public class MenuListener implements SelectionListener {
 		}
 		
 		if(item.equals(view.viewMenu.saveItem)) {
-			view.saveFile(model.getAegean());
+			view.saveFile();
 		}
 		
 		if(item.equals(view.viewMenu.switchItem)) {
