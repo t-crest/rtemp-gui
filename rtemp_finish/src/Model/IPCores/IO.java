@@ -12,6 +12,8 @@ public class IO extends PlatformObject {
 	String devTypeRef;
 	@Attribute
 	String offset;
+	@Attribute(required=false)
+	String intrs;
 	
 	public String getDevTypeRef() {
 		return devTypeRef;
