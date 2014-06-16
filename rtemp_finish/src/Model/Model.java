@@ -47,7 +47,7 @@ public class Model {
 	
 	//Loading the IPCores using the includes in from the platform.
 	public void loadIPCores() {
-
+		System.out.println("Loading ip cores");
 		//Clear all the existing IPCores that has been previously loaded.
 		ipcores.clear();
 		for(Include i : getAegean().getPlatform().getInclude()) {
@@ -58,10 +58,12 @@ public class Model {
 				// Remove two first characters
 				filepath = filepath.substring(1);
 
-				filepath = "config" + filepath;
-
+				filepath = getAegean().getParrentFolder() + "/config" + filepath;
+				
+				System.out.println(OSFinder.isWindows());
 				if(OSFinder.isWindows()) {
 					filepath = filepath.replace("/", "\\");
+					System.out.println(filepath);
 				}
 
 

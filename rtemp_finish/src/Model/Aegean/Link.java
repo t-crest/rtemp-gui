@@ -14,7 +14,7 @@ public class Link extends PlatformObject implements Comparable<Link> {
 	@Attribute(required=false) 
 	private String sink;
 	@Attribute(required=false)
-	private String depth;
+	private String linkDepth;
 
 	public String getSource() {
 		return source;
@@ -34,11 +34,11 @@ public class Link extends PlatformObject implements Comparable<Link> {
 	
 
 	public String getLinkDepth() {
-		return depth;
+		return linkDepth;
 	}
 
 	public void setLinkDepth(String linkDepth) {
-		this.depth = linkDepth;
+		this.linkDepth = linkDepth;
 	}
 	
 	public Point getSourcePoint() {
