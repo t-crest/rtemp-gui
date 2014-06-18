@@ -15,7 +15,7 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
 import Model.Model;
-import Model.linkConfiguration;
+import Model.TopologyTypes;
 import Model.Static.ResourceLoader;
 
 public class ViewToolbarPlatform {
@@ -48,7 +48,7 @@ public class ViewToolbarPlatform {
 		itemAddLink = addItem("link_add.png","Add Link",SWT.CHECK);
 		itemRemoveLink = addItem("link_delete.png","Remove Link",SWT.CHECK);
 		itemClearLinks = addItem("links_clear.png","Clear All Links",SWT.PUSH);
-		itemLinkType = addItem("link_edit.png","Link Type",SWT.DROP_DOWN);
+		itemLinkType = addItem("link_edit.png","Topology Type",SWT.DROP_DOWN);
 		itemCopyLink = addItem("link_copy.png","Copy Links",SWT.PUSH);
 		addSeperator();
 		itemAddAllFromLinks = addItem("links_from.png","Add Links From Node",SWT.CHECK);
@@ -91,7 +91,7 @@ public class ViewToolbarPlatform {
 
 
 
-	public void setDropdownMenu(linkConfiguration s) {
+	public void setDropdownMenu(TopologyTypes s) {
 		if(s == null) {
 			return;
 		}

@@ -11,7 +11,7 @@ public abstract class PlatformObject implements Cloneable {
 
 	public PlatformObject() {}
 	
-	public List<TreeObject> getAttributeTree() {
+	public List<TreeObject> getAttributeList() {
 		
 		List<TreeObject> l = new ArrayList<TreeObject>();
 		Object obj = this;
@@ -33,14 +33,14 @@ public abstract class PlatformObject implements Cloneable {
 				// IF LIST
 				else if (f.getType().equals(List.class)) {
 					for (PlatformObject p : (List<PlatformObject>) attributeValue) {
-						List<TreeObject> childList = p.getAttributeTree();
+						List<TreeObject> childList = p.getAttributeList();
 						l.addAll(childList);
 					}
 				}
 				// IF OBJECT
 				else if(f.getType().getSuperclass() != null && attributeValue != null) {
 					if(f.getType().getSuperclass().equals(PlatformObject.class)) {
-						List<TreeObject> childList = ((PlatformObject) attributeValue).getAttributeTree();
+						List<TreeObject> childList = ((PlatformObject) attributeValue).getAttributeList();
 						l.addAll(childList);
 					}
 				}

@@ -11,7 +11,7 @@ import org.eclipse.swt.widgets.ToolItem;
 import Controller.Controller;
 import Dialogs.DoubleInputDialog;
 import Model.Model;
-import Model.linkConfiguration;
+import Model.TopologyTypes;
 import Model.Aegean.Aegean;
 import Model.Aegean.Include;
 import Model.IPCores.IO;
@@ -142,7 +142,7 @@ public class ToolbarListener implements SelectionListener {
 		if(item.equals(this.view.viewToolbarPlatform.itemCopyLink)) {
 			if(view.dialogWarningReplaceCustom()==SWT.OK)
 			{
-				this.model.copyLinkConfiguration();
+				this.model.copyTopologyTypes();
 			}
 		}
 

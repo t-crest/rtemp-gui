@@ -92,7 +92,7 @@ public class ViewDetails {
 		tree.removeAll();
 
 		//get new object list
-		treeObjects = selectedObject.getAttributeTree();
+		treeObjects = selectedObject.getAttributeList();
 
 		//Create new tree items
 		TreeObject previousObj = null;

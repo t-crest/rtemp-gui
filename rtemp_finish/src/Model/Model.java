@@ -107,9 +107,9 @@ public class Model {
 	}
 
 	//Get the topology type
-	public linkConfiguration getTopologyType() {
+	public TopologyTypes getTopologyType() {
 
-		linkConfiguration l = null;
+		TopologyTypes l = null;
 		try {
 			l = getAegean().getPlatform().getTopology().getTopoType();
 		} catch (Exception e) {
@@ -117,11 +117,11 @@ public class Model {
 			e.printStackTrace();
 		}
 
-		return l == null ? linkConfiguration.custom : l;
+		return l == null ? TopologyTypes.custom : l;
 	}
 
 	//Copy the link configuration
-	public void copyLinkConfiguration() {
+	public void copyTopologyTypes() {
 		// Clear all links
 		getAegean().getPlatform().getTopology().getLinks().clear();
 		System.out.println("links cleared");
@@ -129,11 +129,11 @@ public class Model {
 		switch(getTopologyType()) {
 		case bitorus:
 			getAegean().getPlatform().getTopology().getLinks().addAll(createBitorusLinks());
-			getAegean().getPlatform().getTopology().setTopoType(linkConfiguration.custom);
+			getAegean().getPlatform().getTopology().setTopoType(TopologyTypes.custom);
 			break;
 		case mesh:
 			getAegean().getPlatform().getTopology().getLinks().addAll(createMeshLinks());
-			getAegean().getPlatform().getTopology().setTopoType(linkConfiguration.custom);
+			getAegean().getPlatform().getTopology().setTopoType(TopologyTypes.custom);
 			break;
 		}
 	}

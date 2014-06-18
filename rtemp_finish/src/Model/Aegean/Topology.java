@@ -7,13 +7,13 @@ import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
 import Model.PlatformObject;
-import Model.linkConfiguration;
+import Model.TopologyTypes;
 
 @Root
 public class Topology  extends PlatformObject {
 
 	@Attribute(required=false)
-	private linkConfiguration topoType;
+	private TopologyTypes topoType;
 	@Attribute(required=false)
 	private String routerDepth="0";
 	@Attribute(required=false)
@@ -25,11 +25,11 @@ public class Topology  extends PlatformObject {
 	
 	
 	
-	public linkConfiguration getTopoType() {
+	public TopologyTypes getTopoType() {
 		return topoType;
 	}
 
-	public void setTopoType(linkConfiguration type) {
+	public void setTopoType(TopologyTypes type) {
 		this.topoType = type;
 	}
 

@@ -20,7 +20,7 @@ import Dialogs.DoubleInputDialog;
 import Dialogs.TextInputDialog;
 import Model.Model;
 import Model.PlatformObject;
-import Model.linkConfiguration;
+import Model.TopologyTypes;
 import Model.Aegean.Aegean;
 import Model.Aegean.Include;
 import Model.IPCores.IPCore;
@@ -43,7 +43,6 @@ public class View {
 	public ViewToolbarCpu viewToolbarCpu;
 	public ViewToolbarDetails viewToolbarDetails;
 	public ViewMenu viewMenu;
-	public ViewNewPlatform viewNewPlatform;
 
 	private PlatformObject selectedDetails;
 
@@ -133,13 +132,6 @@ public class View {
 
 	public void addCanvasPaintListener(CanvasPaintListener listener) {
 		this.viewCanvas.getCanvas().addPaintListener(listener);
-	}
-
-	public void addNewPlatformListerner(SelectionListener listener) {
-		for(Button button : this.viewNewPlatform.getButtons())
-		{
-			button.addSelectionListener(listener);
-		}
 	}
 
 	public void addTabListener(SelectionListener listener) {
@@ -236,11 +228,11 @@ public class View {
 		// Show settings for selected PlatformObject
 		viewDetails.showSettings(selectedDetails);
 
-		// Check current link configuration
-		linkConfiguration l = model.getAegean().getPlatform().getTopology().getTopoType();
+		// Check current topology type
+		TopologyTypes l = model.getTopologyType();
 		viewToolbarPlatform.setDropdownMenu(l);
 
-		if(linkConfiguration.custom.equals(l)) {
+		if(TopologyTypes.custom.equals(l)) {
 			this.viewToolbarPlatform.itemAddLink.setEnabled(true);
 			this.viewToolbarPlatform.itemRemoveLink.setEnabled(true);
 			this.viewToolbarPlatform.itemClearLinks.setEnabled(true);
@@ -395,7 +387,7 @@ public class View {
 				aegean.getPlatform().setWidth(String.valueOf(h));
 				aegean.getPlatform().setHeight(String.valueOf(w));
 
-				aegean.getPlatform().getTopology().setTopoType(linkConfiguration.custom);
+				aegean.getPlatform().getTopology().setTopoType(TopologyTypes.custom);
 
 				Include i1 = new Include();
 				i1.setHref("./ip/ip.xml");
