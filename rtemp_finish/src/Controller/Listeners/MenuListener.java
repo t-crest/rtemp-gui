@@ -62,6 +62,10 @@ public class MenuListener implements SelectionListener {
 			view.clearToolSelection(null);
 		}
 		
+		if(item.equals(view.viewMenu.itemAbout)) {
+			view.dialogAboutBox();
+		}
+		
 		view.update();
 	}
 }

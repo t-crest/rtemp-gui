@@ -139,7 +139,13 @@ public class View {
 	}
 
 	/* ************************ DIALOG BOXES ************************* */
-
+	
+	public void dialogAboutBox() {
+		MessageBox box = new MessageBox(getShell(), SWT.OK);
+		box.setText("About");
+		box.setMessage("This tool is the product of a software technology project by Peter Gelsbo and Andreas Nordmand Andersen.\n\nThe Icons used are made by Mark James under the Creative Commons Attribution 2.5 License.\nhttp://www.famfamfam.com/lab/icons/silk/");
+		box.open();
+	}
 	public int dialogWarningReplaceCustom() {
 		MessageBox box = new MessageBox(getShell(), SWT.OK | SWT.CANCEL);
 		box.setText("Warning");

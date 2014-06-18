@@ -27,7 +27,7 @@ public class ViewMenu {
 	private Model model;
 	
 	private List<MenuItem> items = new ArrayList<MenuItem>();
-	public MenuItem openItem, saveItem, switchItem, removeNode, addNode, newPlatform, itemDeselect;
+	public MenuItem openItem, saveItem, switchItem, removeNode, addNode, newPlatform, itemDeselect,itemAbout;
 
 	public ViewMenu(final Model model, final View view) throws Exception {
 		this.view=view;
@@ -61,6 +61,8 @@ public class ViewMenu {
 		addNode = addItem(submenu,"Add &item\t+",'+');
 		addSeperator(submenu);
 		itemDeselect = addItem(submenu,"Deselect &tools\tEsc",SWT.ESC);
+		addSeperator(submenu);
+		itemAbout = addItem(submenu,"About",SWT.NONE);
 	}
 
 	private MenuItem addItem(Menu submenu, String itemText, int acc) {
