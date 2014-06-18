@@ -375,7 +375,7 @@ public class View {
 			h = Integer.valueOf((String) result[1]);
 			w = Integer.valueOf((String) result[2]);
 		} catch (NumberFormatException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 
 		if((Integer)result[0] == SWT.OK) {
