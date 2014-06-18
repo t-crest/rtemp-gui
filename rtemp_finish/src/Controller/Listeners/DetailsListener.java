@@ -177,11 +177,22 @@ public class DetailsListener implements SelectionListener {
 		} 
 
 		if(o.platformObject.getClass().equals(Platform.class)){
+			
+			// Check if the input is a valid integer
+			try {
+				Integer.parseInt(text);
+			} catch (NumberFormatException e) {
+				// Return if not succeed
+				return;
+			}
+			
+			
 			if(view.dialogWarningDimension()==SWT.OK)
 			{
 
 				if(o.attributeName.equals("height"))
 				{
+					
 					ti.setText (1,text);
 					p.changeField(ti.getText(0),ti.getText(1));
 					model.destroyLongLinks("height");
