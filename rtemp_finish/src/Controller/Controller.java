@@ -94,7 +94,7 @@ public class Controller {
 		System.out.println("\n");
 		
 		String filename= model.getAegean().getFileName().replaceAll(".xml", "");
-		String cmd = "make -C " + model.getAegean().getParrentFolder()+ " AEGEAN_PLATFORM=" + filename +" "+commandIn;
+		String cmd = "make -C " + OSFinder.filePath(model.getAegean().getParrentFolder()) + " AEGEAN_PLATFORM=" + filename +" "+commandIn;
 		
 		
 		String[] command = {};

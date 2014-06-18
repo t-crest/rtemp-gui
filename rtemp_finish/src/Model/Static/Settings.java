@@ -31,7 +31,7 @@ public class Settings implements IConfig
 		File dir = new File("settings");
 		dir.mkdir();
 		
-		String filename= OSFinder.isWindows() ? "settings\\settings.xml":"settings/settings.xml";
+		String filename= OSFinder.filePath("settings/settings.xml");
 		try 
 		{
 			File file = new File(filename);

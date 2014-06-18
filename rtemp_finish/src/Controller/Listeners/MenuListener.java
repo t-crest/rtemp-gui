@@ -1,16 +1,11 @@
 package Controller.Listeners;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.widgets.DirectoryDialog;
-import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.MenuItem;
 
 import Controller.Controller;
 import Model.Model;
-import Model.Static.OSFinder;
-import Model.Static.Settings;
 import View.View;
 
 public class MenuListener implements SelectionListener {

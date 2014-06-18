@@ -71,14 +71,7 @@ public class Model {
 				// Remove two first characters
 				filepath = filepath.substring(1);
 
-				filepath = getAegean().getParrentFolder() + "/config" + filepath;
-
-				System.out.println(OSFinder.isWindows());
-				if(OSFinder.isWindows()) {
-					filepath = filepath.replace("/", "\\");
-					System.out.println(filepath);
-				}
-
+				filepath = OSFinder.filePath(getAegean().getParrentFolder() + "/config" + filepath);
 
 				try {
 					IPCores ips = XmlSerializer.Load(IPCores.class, filepath);

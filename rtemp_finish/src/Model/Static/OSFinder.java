@@ -17,5 +17,9 @@ public class OSFinder
 	    public static boolean isWindows() { return isWindows; }
 	    public static boolean isLinux() { return isLinux; }
 	    public static boolean isMac() { return isMac; }
-
+	    
+	    // Checks and corrects a filepath
+	    public static String filePath(String filepath) {
+	    	return isWindows() ? filepath.replace("/", "\\"):filepath;
+	    }
 }
