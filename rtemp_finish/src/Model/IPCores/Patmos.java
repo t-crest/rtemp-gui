@@ -38,7 +38,7 @@ public class Patmos  extends PlatformObject {
 	@Element(name="ExtMem")
 	ExtMem extMem;
 	@ElementList(name="IOs")
-	List<IO> ios = new ArrayList<IO>();
+	ArrayList<IO> ios = new ArrayList<IO>();
 	
 	public String getDescription() {
 		return description;
@@ -136,7 +136,7 @@ public class Patmos  extends PlatformObject {
 		this.extMem = extMem;
 	}
 	
-	public List<IO> getIos() {
+	public ArrayList<IO> getIos() {
 		return ios;
 	}
 	
