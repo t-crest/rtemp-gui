@@ -9,11 +9,11 @@ import Model.PlatformObject;
 import Model.IPCores.IPCore;
 import View.View;
 
-public class CpuListener implements SelectionListener {
+public class IpListener implements SelectionListener {
 	private View view;
 	private Model model;
 	
-	public CpuListener(Model model, View view) {
+	public IpListener(Model model, View view) {
 		this.view = view;
 		this.model = model;
 	}

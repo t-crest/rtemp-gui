@@ -4,14 +4,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
 import Controller.Controller;
-import Dialogs.DoubleInputDialog;
 import Model.Model;
-import Model.TopologyTypes;
 import Model.Aegean.Aegean;
 import Model.Aegean.Include;
 import Model.IPCores.IO;

@@ -17,13 +17,13 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 
-import Controller.Listeners.CpuListener;
+import Controller.Listeners.IpListener;
 import Model.Model;
 import Model.IPCores.IPCore;
 import Model.IPCores.IPCores;
 
 
-public class ViewCpu {
+public class ViewIp {
 	private View view;
 	private Model model;
 	private List<Button> buttons = new ArrayList<Button>();
@@ -32,7 +32,7 @@ public class ViewCpu {
 
 	/* ********************* CONSTRUCTOR ********************* */
 
-	public ViewCpu(Model model, View view) {
+	public ViewIp(Model model, View view) {
 		this.view = view;
 		this.model = model;
 		
@@ -115,7 +115,7 @@ public class ViewCpu {
 				buttons.add(button);
 
 				//Adding listener
-				button.addSelectionListener(new CpuListener(model, view));
+				button.addSelectionListener(new IpListener(model, view));
 			}
 
 		}

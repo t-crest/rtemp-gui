@@ -16,7 +16,7 @@ import org.eclipse.swt.widgets.ToolItem;
 
 import Controller.Listeners.CanvasListener;
 import Controller.Listeners.CanvasPaintListener;
-import Dialogs.DoubleInputDialog;
+
 import Dialogs.TextInputDialog;
 import Model.Model;
 import Model.PlatformObject;
@@ -37,10 +37,10 @@ public class View {
 	private Shell shell;
 
 	public ViewDetails viewDetails;
-	public ViewCpu viewCpu;
+	public ViewIp viewCpu;
 	public ViewCanvas viewCanvas;
 	public ViewToolbarPlatform viewToolbarPlatform;
-	public ViewToolbarCpu viewToolbarCpu;
+	public ViewToolbarIp viewToolbarCpu;
 	public ViewToolbarDetails viewToolbarDetails;
 	public ViewMenu viewMenu;
 
@@ -79,7 +79,7 @@ public class View {
 		new ViewLabel(this, "Platform", SWT.CENTER);
 		new ViewLabel(this, "Details", SWT.CENTER);
 
-		viewToolbarCpu = new ViewToolbarCpu(model,this);
+		viewToolbarCpu = new ViewToolbarIp(model,this);
 
 		//creating toolbar and toolitems
 		viewToolbarPlatform = new ViewToolbarPlatform(model,this);
@@ -88,7 +88,7 @@ public class View {
 		viewToolbarDetails = new ViewToolbarDetails(model,this);
 
 		// Column 1 - CPUs
-		viewCpu = new ViewCpu(model, this);
+		viewCpu = new ViewIp(model, this);
 
 		// Column 2 - Board
 		viewCanvas = new ViewCanvas(model, this);
@@ -205,10 +205,11 @@ public class View {
 	}
 
 	public Object[] dialogNewPlatform() {
-		DoubleInputDialog d = new DoubleInputDialog(shell);
+		TextInputDialog d = new TextInputDialog(getShell(),SWT.OK | SWT.CANCEL);
 		d.setText("New Platform");
 		d.setMessage("Please insert the height and width of the Platform");
-		d.setOptions("Width:", "Height:");
+		d.setOptions(SWT.NONE,"Width:", "Height:");
+		d.setWidth(250);
 		return d.open();
 	}
 
@@ -372,19 +373,22 @@ public class View {
 
 	public void createNewPlatform() {
 		Object[] result = dialogNewPlatform();
-
+		
+		int type = (Integer) result[0];
+		String[] values = (String[]) result[1];
+		
 		int h = 0;
 		int w = 0;
 
 		// Make sure that the input values are integers
 		try {
-			h = Integer.valueOf((String) result[1]);
-			w = Integer.valueOf((String) result[2]);
+			h = Integer.valueOf((String) values[0]);
+			w = Integer.valueOf((String) values[1]);
 		} catch (NumberFormatException e) {
 //			e.printStackTrace();
 		}
 
-		if((Integer)result[0] == SWT.OK) {
+		if(type == SWT.OK) {
 
 			boolean ok = dialogWarningPlatform() == SWT.OK ? true : false; 
 

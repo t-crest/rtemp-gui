@@ -11,7 +11,7 @@ import org.eclipse.swt.widgets.ToolItem;
 import Model.Model;
 import Model.Static.ResourceLoader;
 
-public class ViewToolbarCpu {
+public class ViewToolbarIp {
 	private View view;
 	private Model model;
 	private ToolBar toolBar;
@@ -19,7 +19,7 @@ public class ViewToolbarCpu {
 
 	private List<ToolItem> toolItems = new ArrayList<ToolItem>();
 
-	public ViewToolbarCpu(Model model, View view) {
+	public ViewToolbarIp(Model model, View view) {
 		this.view = view;
 		this.model = model;
 
