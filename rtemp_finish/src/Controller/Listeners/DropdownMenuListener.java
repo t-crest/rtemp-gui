@@ -30,19 +30,16 @@ public class DropdownMenuListener implements SelectionListener {
 
 		// CUSTOM LINKS
 		if(item.equals(view.viewToolbarPlatform.itemCustom)) {
-			System.out.println("Custom");
 			model.getAegean().getPlatform().getTopology().setTopoType(TopologyTypes.custom);
 		}
 		
 		// MESH LINKS
 		if(item.equals(view.viewToolbarPlatform.itemMesh)) {
-			System.out.println("Mesh");
 			model.getAegean().getPlatform().getTopology().setTopoType(TopologyTypes.mesh);
 		}
 		
 		// BITORUS LINKS
 		if(item.equals(view.viewToolbarPlatform.itemBitorus)) {
-			System.out.println("Bitorus");
 			model.getAegean().getPlatform().getTopology().setTopoType(TopologyTypes.bitorus);
 		}
 		

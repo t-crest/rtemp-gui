@@ -1,4 +1,4 @@
-package Model.Static;
+package Static;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -40,7 +40,6 @@ public class Settings implements IConfig
 		catch (Exception e) 
 		{
 			instance =  new Settings(filename);
-			System.out.println("Could not find the settings document.");
 		}
 	}
 	
@@ -51,7 +50,6 @@ public class Settings implements IConfig
 	
 	public void save() throws Exception
 	{	
-		System.out.println(this.absolutepath);
 		XmlSerializer.Save(this, this.absolutepath);
 	}
 	

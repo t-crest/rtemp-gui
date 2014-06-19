@@ -14,9 +14,8 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolItem;
 
-import Controller.Listeners.CanvasListener;
+import Controller.Listeners.CanvasMouseListener;
 import Controller.Listeners.CanvasPaintListener;
-
 import Dialogs.TextInputDialog;
 import Model.Model;
 import Model.PlatformObject;
@@ -25,9 +24,8 @@ import Model.Aegean.Aegean;
 import Model.Aegean.Include;
 import Model.IPCores.IPCore;
 import Model.IPCores.IPCores;
-import Model.Static.OSFinder;
-import Model.Static.ResourceLoader;
-import Model.Static.Settings;
+import Static.OSFinder;
+import Static.Settings;
 
 
 public class View {
@@ -126,7 +124,7 @@ public class View {
 		}
 	}
 
-	public void addCanvasListener(CanvasListener listener) {
+	public void addCanvasListener(CanvasMouseListener listener) {
 		this.viewCanvas.getCanvas().addMouseListener(listener);
 	}
 
@@ -291,7 +289,6 @@ public class View {
 			String readPathWorkspace= Settings.getInstance().getSetting(OSFinder.isWindows() ? "workspaceWindows" :"workspaceMac");
 			filedialog.setFilterPath(readPathWorkspace);
 		} catch (Exception e2) {
-			System.out.println("Error when trying to open workspace path");
 			e2.printStackTrace();
 		}
 
@@ -319,7 +316,6 @@ public class View {
 			String readPathWorkspace= Settings.getInstance().getSetting(OSFinder.isWindows() ? "workspaceWindows" :"workspaceMac");
 			filedialog.setFilterPath(readPathWorkspace);
 		} catch (Exception e2) {
-			System.out.println("Error when trying to save workspace path");
 			e2.printStackTrace();
 		}
 
@@ -340,7 +336,6 @@ public class View {
 			String readPathWorkspace= Settings.getInstance().getSetting(OSFinder.isWindows() ? "workspaceWindows" :"workspaceMac");
 			dialog.setFilterPath(readPathWorkspace);
 		} catch (Exception e2) {
-			System.out.println("Error when trying to switch workspace path");
 			e2.printStackTrace();
 		}
 
@@ -420,7 +415,6 @@ public class View {
 				update();
 
 			} else {
-				System.out.println("Not ok.");
 			}
 		}
 	}

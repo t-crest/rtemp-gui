@@ -14,12 +14,12 @@ import Model.Model;
 import Model.Aegean.Link;
 import View.View;
 
-public class CanvasListener implements MouseListener {
+public class CanvasMouseListener implements MouseListener {
 	private View view;
 	private Model model;
 	private Controller controller;
 	
-	public CanvasListener(Model model, View view, Controller controller) {
+	public CanvasMouseListener(Model model, View view, Controller controller) {
 		this.view = view;
 		this.model = model;
 		this.controller = controller;

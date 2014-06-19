@@ -23,7 +23,7 @@ import Model.Aegean.Node;
 import Model.Aegean.Platform;
 import Model.IPCores.IPCore;
 import Model.IPCores.IPCores;
-import Model.Static.XmlSerializer;
+import Static.XmlSerializer;
 import View.View;
 
 public class DetailsListener implements SelectionListener {
@@ -92,7 +92,6 @@ public class DetailsListener implements SelectionListener {
 					switch (e.type) {
 					case SWT.FocusOut:
 						composite.dispose ();
-						System.out.println("FocusOut");
 						break;
 					case SWT.Verify:
 						String newText = text.getText ();
@@ -109,7 +108,6 @@ public class DetailsListener implements SelectionListener {
 						editor.minimumWidth = Math.min (editor.minimumWidth, right - left);
 						editor.minimumHeight = size.y + inset * 2;
 						editor.layout ();
-						System.out.println("Verify");
 						break;
 					case SWT.Traverse:
 						switch (e.detail) {
@@ -120,7 +118,6 @@ public class DetailsListener implements SelectionListener {
 							composite.dispose ();
 							e.doit = false;
 						}
-						System.out.println("Traverse");
 						break;
 					}
 				}
@@ -164,7 +161,6 @@ public class DetailsListener implements SelectionListener {
 					ti.setText (1,text);
 					// Set field
 					p.changeField(ti.getText(0),ti.getText(1));
-					System.out.println(ti.getText(0) + ","+ti.getText(1));
 					// Reload ipcores in model
 					model.loadIPCores();
 					// Create tabs in view

@@ -46,7 +46,6 @@ public abstract class PlatformObject implements Cloneable {
 				}
 				// OTHERWISE
 				else {
-					System.out.println("Error! Object class " + f.getType().getSimpleName() + " not recognized or was null.");
 				}
 			}
 			

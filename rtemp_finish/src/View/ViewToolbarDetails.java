@@ -9,7 +9,6 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
 import Model.Model;
-import Model.Static.ResourceLoader;
 
 public class ViewToolbarDetails {
 	private View view;

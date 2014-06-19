@@ -11,8 +11,8 @@ import Model.Aegean.Link;
 import Model.Aegean.Node;
 import Model.IPCores.IPCore;
 import Model.IPCores.IPCores;
-import Model.Static.OSFinder;
-import Model.Static.XmlSerializer;
+import Static.OSFinder;
+import Static.XmlSerializer;
 
 public class Model {
 	private List<IPCores> ipcores = new ArrayList<IPCores>();
@@ -60,7 +60,6 @@ public class Model {
 
 	//Loading the IPCores from the includes in the platform.
 	public void loadIPCores() {
-		System.out.println("Loading ip cores");
 		//Clear all the existing IPCores that has been previously loaded.
 		ipcores.clear();
 		for(Include i : getAegean().getPlatform().getInclude()) {
@@ -117,7 +116,6 @@ public class Model {
 	public void copyTopologyTypes() {
 		// Clear all links
 		getAegean().getPlatform().getTopology().getLinks().clear();
-		System.out.println("links cleared");
 
 		switch(getTopologyType()) {
 		case bitorus:

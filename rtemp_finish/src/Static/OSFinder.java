@@ -1,4 +1,5 @@
-package Model.Static;
+package Static;
+
 
 public class OSFinder 
 {

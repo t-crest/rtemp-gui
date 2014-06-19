@@ -16,7 +16,6 @@ import org.eclipse.swt.widgets.ToolItem;
 
 import Model.Model;
 import Model.TopologyTypes;
-import Model.Static.ResourceLoader;
 
 public class ViewToolbarPlatform {
 	private View view;

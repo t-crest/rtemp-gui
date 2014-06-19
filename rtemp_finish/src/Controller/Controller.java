@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 
 import org.eclipse.swt.SWT;
 
-import Controller.Listeners.CanvasListener;
+import Controller.Listeners.CanvasMouseListener;
 import Controller.Listeners.CanvasPaintListener;
 import Controller.Listeners.DetailsListener;
 import Controller.Listeners.DropdownMenuListener;
@@ -16,7 +16,7 @@ import Controller.Listeners.ToolbarListener;
 import Model.Model;
 import Model.Aegean.Node;
 import Model.IPCores.IPCore;
-import Model.Static.OSFinder;
+import Static.OSFinder;
 import View.View;
 
 public class Controller {
@@ -31,7 +31,7 @@ public class Controller {
 		view.addToolbarListener	(new ToolbarListener	(model,view, this));
 		view.addDetailsListener	(new DetailsListener	(model,view));
 		view.addMenuListener	(new MenuListener		(model,view, this));
-		view.addCanvasListener	(new CanvasListener		(model,view,this));
+		view.addCanvasListener	(new CanvasMouseListener		(model,view,this));
 		view.addCanvasPaintListener (new CanvasPaintListener (model,view));
 		view.addDropdownMenuListener(new DropdownMenuListener(model,view,this));
 		view.addTabListener		(new TabListener(model,view));
@@ -91,11 +91,6 @@ public class Controller {
 	}
 
 	public void runCommand(String commandIn) {
-		for(String s : new String[]{ "osascript", "-e", "tell application \"Terminal\" to do script " + "\"" + "make" + "\""}) {
-			System.out.print(s + " ");
-		}
-		System.out.println("\n");
-		
 		String filename= model.getAegean().getFileName().replaceAll(".xml", "");
 		String cmd = "make -C " + OSFinder.filePath(model.getAegean().getParrentFolder()) + " AEGEAN_PLATFORM=" + filename +" "+commandIn;
 		
@@ -110,31 +105,6 @@ public class Controller {
 		if(OSFinder.isWindows())
 			command = new String[]{"cmd /c start cmd.exe /K " + cmd};
 		
-		for(String s : new String[]{ "osascript", "-e", "tell application \"Terminal\" to do script " + "\"" + cmd + "\""}) {
-			System.out.print(s + " ");
-		}
-		System.out.println("\n");
-		
-//		String cmd = "make -C " + model.getAegean().getParrentFolder()+ " AEGEAN_PLATFORM=" + filename +" "+commandIn;
-//		System.out.println(cmd);
-//		String line = "gnome-terminal -x bash -c \""+cmd+";$SHELL\"";
-//		CommandLine commandLine = CommandLine.parse(line);
-//		DefaultExecutor executor = new DefaultExecutor();
-//		executor.setExitValue(1);
-//		
-//		try {
-//			int exitValue = executor.execute(commandLine);
-//		} catch (ExecuteException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
-		
-		
-		
 
 		Process process = null;
 
@@ -143,19 +113,7 @@ public class Controller {
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		String lsString = "";
-		BufferedReader bufferedReader = new BufferedReader(
-				new InputStreamReader(process.getInputStream()));
-		try {
-			while ((lsString = bufferedReader.readLine()) != null) {
-				System.out.println(lsString);
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 }

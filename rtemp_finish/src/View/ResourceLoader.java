@@ -1,4 +1,4 @@
-package Model.Static;
+package View;
 
 import java.io.InputStream;
 

@@ -1,4 +1,5 @@
-package Model.Static;
+package Static;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.List;
