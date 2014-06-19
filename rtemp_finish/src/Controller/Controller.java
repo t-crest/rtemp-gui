@@ -78,6 +78,9 @@ public class Controller {
 
 	public void editSpm() {
 		Node selectedNode = view.viewCanvas.getSelectedNode();
+		
+		if(selectedNode == null) 
+			return;
 
 		Object[] result = view.dialogEditSpm();
 		boolean ok = (Integer)result[0] == SWT.OK ? true : false;
