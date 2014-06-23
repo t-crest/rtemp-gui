@@ -41,7 +41,7 @@ public class Platform  extends PlatformObject {
 	@Element
 	private Memory memory = new Memory();
 	@ElementList(inline=true)
-	private List<Include> include  = new ArrayList<Include>(); 
+	private ArrayList<Include> include  = new ArrayList<Include>(); 
 
 	public int getWidth() {
 		return Integer.parseInt(width);

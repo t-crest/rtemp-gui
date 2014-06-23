@@ -32,6 +32,7 @@ import Model.PlatformObject;
 import Model.TreeObject;
 import Model.Aegean.Include;
 import Model.Aegean.Link;
+import Model.Aegean.Node;
 import Model.IPCores.IO;
 
 
@@ -58,6 +59,7 @@ public class ViewDetails {
 		 * classExceptions are used to disable editing of classes in the details view
 		 * attributeExceptions are used to remove attributes completely from the details view
 		 */
+		classExpections.add(Node.class);
 		attributeExceptions.add("source");
 		attributeExceptions.add("sink");
 		attributeExceptions.add("fileName");
@@ -115,6 +117,11 @@ public class ViewDetails {
 		TreeItem previousHeader = null;
 		for(int i = 0; i < treeObjects.size(); i++) {
 			TreeObject treeObj = treeObjects.get(i);
+			
+			// Skip exceptions
+			if(classExpections.contains(treeObj.platformObject.getClass())) {
+				continue;
+			}
 			
 			// If Link - only show selected links
 			if(treeObj.platformObject.getClass().equals(Link.class) && !view.viewCanvas.selectedLinks.contains(treeObj.platformObject)) {
@@ -175,11 +182,6 @@ public class ViewDetails {
 		subitem.setData("header", false);
 		subitem.setData("treeObject",treeObj);
 		subitem.setData("expection", false);
-		
-		// Set expection if classExcption contains this object class
-		if(classExpections.contains(treeObj.platformObject.getClass())) {
-			subitem.setData("expection", true);
-		}
 		
 		// Expand header
 		previousHeader.setExpanded(true);
