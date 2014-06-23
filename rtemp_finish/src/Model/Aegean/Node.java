@@ -20,8 +20,10 @@ import java.awt.Point;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;
 
+import Model.PlatformObject;
+
 @Root
-public class Node implements Comparable<Node>{
+public class Node extends PlatformObject implements Comparable<Node> {
 
 	@Attribute (required=false)
 	private String id;

@@ -45,8 +45,9 @@ public abstract class PlatformObject implements Cloneable {
 
 				} 
 				// IF LIST
-				else if (f.getType().equals(List.class)) {
-					for (PlatformObject p : (List<PlatformObject>) attributeValue) {
+				else if (f.getType().equals(ArrayList.class)) {
+					System.out.println("test");
+					for (PlatformObject p : (ArrayList<PlatformObject>) attributeValue) {
 						List<TreeObject> childList = p.getAttributeList();
 						l.addAll(childList);
 					}

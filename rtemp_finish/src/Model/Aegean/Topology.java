@@ -37,7 +37,7 @@ public class Topology  extends PlatformObject {
 	@Attribute(required=false)
 	private String routerType="";
 	@ElementList(inline=true, required=false)
-	private List<Link> links = new ArrayList<Link>();
+	private ArrayList<Link> links = new ArrayList<Link>();
 	
 	
 	

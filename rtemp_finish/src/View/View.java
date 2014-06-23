@@ -67,7 +67,7 @@ public class View {
 		display = Display.getDefault();
 		setShell(new Shell (display));
 		getShell().setText("Graphical Configuration for RTEMP");
-		getShell().setMinimumSize(1024, 100);
+		getShell().setMinimumSize(400, 100);
 		getShell().setLayout(new GridLayout(3,false));
 
 		//Center the in the middel of the screen
