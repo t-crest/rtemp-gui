@@ -34,7 +34,7 @@ public class ViewMenu {
 	private Model model;
 	
 	private List<MenuItem> items = new ArrayList<MenuItem>();
-	public MenuItem openItem, saveItem, switchItem, removeNode, addNode, newPlatform, itemDeselect,itemAbout;
+	public MenuItem openItem, saveItem, switchItem, exitItem, removeNode, addNode, newPlatform, itemDeselect,itemAbout;
 
 	public ViewMenu(final Model model, final View view) throws Exception {
 		this.view=view;
@@ -55,6 +55,8 @@ public class ViewMenu {
 		openItem = addItem(submenu, "Open &File\tCtrl+O", SWT.MOD1 + 'O');
 		saveItem = addItem(submenu,"Save &As\tCtrl+S",SWT.MOD1 + 'S');
 		switchItem = addItem(submenu,"Switch &Workspace\tCtrl+W",SWT.MOD1 + 'W');
+		addSeperator(submenu);
+		exitItem = addItem(submenu,"Exit",SWT.NONE);
 
 
 		fileItem = new MenuItem (menu, SWT.CASCADE);

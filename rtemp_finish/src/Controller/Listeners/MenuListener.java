@@ -57,6 +57,11 @@ public class MenuListener implements SelectionListener {
 			view.switchWorkspace();
 		}
 		
+		if(item.equals(view.viewMenu.exitItem)) {
+			view.getShell().dispose();
+			return;
+		}
+		
 		if(item.equals(view.viewMenu.newPlatform)) {
 			view.createNewPlatform();
 		}
