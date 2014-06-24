@@ -30,7 +30,7 @@ public class IPCores extends PlatformObject implements IConfig {
 
 	private String fileName;
 	@ElementList(name="IPCores", inline=true)
-	List<IPCore> ipCores = new ArrayList<IPCore>();
+	ArrayList<IPCore> ipCores = new ArrayList<IPCore>();
 	private String absolutepath;
 
 	public List<IPCore> getIpCores() {

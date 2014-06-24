@@ -111,7 +111,6 @@ public class ViewDetails {
 
 		//get new object list
 		treeObjects = selectedObject.getAttributeList();
-
 		//Create new tree items
 		TreeObject previousObj = null;
 		TreeItem previousHeader = null;

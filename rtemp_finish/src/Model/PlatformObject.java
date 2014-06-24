@@ -46,7 +46,6 @@ public abstract class PlatformObject implements Cloneable {
 				} 
 				// IF LIST
 				else if (f.getType().equals(ArrayList.class)) {
-					System.out.println("test");
 					for (PlatformObject p : (ArrayList<PlatformObject>) attributeValue) {
 						List<TreeObject> childList = p.getAttributeList();
 						l.addAll(childList);
@@ -127,10 +126,10 @@ public abstract class PlatformObject implements Cloneable {
 					newValue = oldValue;
 				}
 				// If List
-				else if(f.getType().equals(List.class)) {
+				else if(f.getType().equals(ArrayList.class)) {
 					List<PlatformObject> newList = new ArrayList<PlatformObject>();
 					
-					for (PlatformObject p : (List<PlatformObject>) oldValue) {
+					for (PlatformObject p : (ArrayList<PlatformObject>) oldValue) {
 						newList.add(p.clone());
 						newValue = newList;
 					}

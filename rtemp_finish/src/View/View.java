@@ -238,15 +238,13 @@ public class View {
 	/* *************************** METHODS *************************** */
 
 	public void update() {
+		
 		// Repaint canvas
 		viewCanvas.repaint();
-
 		// Update IP list
 		viewCpu.createButtons();
-
 		// Show settings for selected PlatformObject
 		viewDetails.showSettings(selectedDetails);
-
 		// Check current topology type
 		TopologyTypes l = model.getTopologyType();
 		viewToolbarPlatform.setDropdownMenu(l);
